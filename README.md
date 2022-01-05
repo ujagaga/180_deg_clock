@@ -11,7 +11,8 @@ I am using an addressable RGB LED strip in a 3D printed 7 segment display becaus
 
 ## Local time server
 
-Using internet NTP server is accurate, but only shows UTC time. Adjusting for daylight savings can be tricky in an embedded device like ESP8266, so I wrote a simple python script to serve local time on a custom port. It can be deployed on any computer on local network, so the clock can synchronize when ever this computer is online. It's only dependency is Python3.
+Using internet NTP server is accurate, but only shows UTC time. Adjusting for daylight savings can be tricky in an embedded device like ESP8266, so I wrote a simple python script to broadcast local time on a custom UDP port. It can be deployed on any computer on local network, so the clock can synchronize when ever this computer is online. The server broadcasts the number of seconds passed in the current day, so you only need to run it one per day.
+It's only dependency is Python3.
 
 ## Status
 
