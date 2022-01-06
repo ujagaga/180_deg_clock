@@ -18,7 +18,7 @@ void SH_process(){
     servo_timestamp = millis();
 
     uint32_t seconds = UDP_getCurrentSeconds();
-    int angle = map(seconds, 0, MAX_SECONDS_PER_DAY, 0, 180);
+    int angle = map(seconds, 0, SECONDS_PER_12_H, 0, 180);
     clockServo.write(angle);
   }
 }

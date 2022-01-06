@@ -34,24 +34,19 @@ void setOff(){
 
 void setNumber(int num){
   setOff();
-  
+  int i;
   uint8_t first = num / 10;
-
-  if(first == 1){
-    strip.setPixelColor(8, daylight_color);
-    strip.setPixelColor(9, daylight_color);
-  }else if(first == 2){
-    strip.setPixelColor(9, daylight_color);
-    strip.setPixelColor(10, daylight_color);
-  }
-
   uint8_t second = SEGMENT[num % 10];
 
-  for(int i = 0; i < 7; ++i){
-    if((second >> i) & 1){
+  for(i = 0; i < 7; ++i){
+    if((SEGMENT[first] >> i) & 1){
       strip.setPixelColor(i, daylight_color);
     }
-  }
+
+    if((SEGMENT[second] >> i) & 1){
+      strip.setPixelColor(i, daylight_color);
+    }
+  }  
 }
 
 void SL_init(){

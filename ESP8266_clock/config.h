@@ -15,5 +15,5 @@
 #define UDP_PORT                    (60000)
 #define SYNC_TIMEOUT                (500) 
 #define MAX_SECONDS_PER_DAY         (86400ul)
-
+#define SECONDS_PER_12_H            (MAX_SECONDS_PER_DAY / 20)
 #endif
