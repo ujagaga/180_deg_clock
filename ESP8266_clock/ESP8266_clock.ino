@@ -5,6 +5,7 @@
 #include "smart_led.h"
 #include "servo_hand.h"
 #include "config.h"
+#include "pendulum.h"
 
 ESP8266WiFiMulti WiFiMulti;
 
@@ -29,10 +30,12 @@ void setup()
   UDPPING_init();
   SL_init();
   SH_init();
+  PENDULUM_init();
 }
 
 void loop() {
   UDPPING_process();
   SH_process();
   SL_process();
+  PENDULUM_process();
 }

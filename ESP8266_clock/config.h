@@ -3,6 +3,8 @@
 
 #define LED_STRIP_PIN               (12)    
 #define SERVO_PIN                   (14) 
+#define PENDULUM_SENSE_PIN          (13)
+#define PENDULUM_TRIGGER_PIN        (4)
 
 #define TIME_SERVER_URL             "http://192.168.0.13:60000"
 
