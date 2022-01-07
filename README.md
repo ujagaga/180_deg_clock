@@ -7,7 +7,7 @@ The time is synchronized from local network. Hours and minutes are displayed usi
 
 The hour hand is moved by the servo motor using two gears so that the hand can be supported by a 3D printed bearing and relieve some weight from the motor. You can either use same sized gears for 180 degree movement or make a custom ratio like 1:2 to achieve 360 degrees as is here.
 For hour numbers, you can use anything you like, custom printed shapes, familly photos, wall art, light bulbs,...
-There is also a pendulum for purely aesthetic resons. It uses two coils and a neodimium magnet to run. It is controlled by the ESP8266.
+There is also a pendulum for purely aesthetic reasons. It uses two coils and a neodimium magnet to run. It can be controlled by the ESP8266, so it can automatically run when powered on, or it can be standalone, but then you have to manually swing it once to get it started.
 
 ## Local time server
 

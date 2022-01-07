@@ -1,9 +1,9 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#define LED_STRIP_PIN               (12)    
-#define SERVO_PIN                   (14) 
-#define PENDULUM_SENSE_PIN          (13)
+#define HOUR_SERVO_PIN              (14) 
+#define MINUTE_SERVO_PIN            (13)
+#define PENDULUM_SENSE_PIN          (5)
 #define PENDULUM_TRIGGER_PIN        (4)
 
 #define TIME_SERVER_URL             "http://192.168.0.13:60000"
@@ -15,7 +15,10 @@
 #define PASS_2                      "ohana130315"
 
 #define UDP_PORT                    (60000)
-#define SYNC_TIMEOUT                (500) 
+#define SYNC_TIMEOUT                (1000) 
 #define MAX_SECONDS_PER_DAY         (86400ul)
-#define SECONDS_PER_12_H            (MAX_SECONDS_PER_DAY / 20)
+#define SECONDS_PER_12_H            (MAX_SECONDS_PER_DAY / 2)
+#define SECONDS_PER_MINUTE          (60)
+#define MINUTES_PER_HOUR            (60)
+#define SECONDS_PER_HOUR            (SECONDS_PER_MINUTE * MINUTES_PER_HOUR)
 #endif

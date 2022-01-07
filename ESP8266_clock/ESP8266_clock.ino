@@ -2,7 +2,6 @@
 #include <ESP8266WiFiMulti.h>
 #include <Servo.h>
 #include "udp_sync_client.h"
-#include "smart_led.h"
 #include "servo_hand.h"
 #include "config.h"
 #include "pendulum.h"
@@ -27,15 +26,13 @@ void setup()
   String wifi_statusMessage = "\nConnected to: " + WiFi.SSID() + String(". IP address: ") + IP;   
   Serial.println(wifi_statusMessage);  
 
-  UDPPING_init();
-  SL_init();
-  SH_init();
+  UDPSYNC_init();
+  SERVO_init();
   PENDULUM_init();
 }
 
 void loop() {
-  UDPPING_process();
-  SH_process();
-  SL_process();
+  UDPSYNC_process();
+  SERVO_process();
   PENDULUM_process();
 }
