@@ -10,7 +10,7 @@ static uint32_t trigger_timestamp = 0;
 
 void PENDULUM_init(){
   pinMode(PENDULUM_TRIGGER_PIN, OUTPUT);
-  pinMode(PENDULUM_SENSE_PIN, INPUT);
+  pinMode(PENDULUM_SENSE_PIN, INPUT_PULLUP);
 }
 
 void PENDULUM_process(){
