@@ -1,6 +1,8 @@
 #include <WiFiUdp.h>
+#include <ESP8266WiFi.h>
 #include "udp_sync_client.h"
 #include "config.h"
+#include "ota.h"
 
 static WiFiUDP Udp;                             /* UDP object used for receiving the ping message. */
 static char incomingPacket[10];                 /* buffer for incoming packets */
@@ -19,20 +21,29 @@ void UDPSYNC_process(){
     int len = Udp.read(incomingPacket, 10);
     
     incomingPacket[len] = 0;
-    
-    uint32_t rx = String(incomingPacket).toInt();
 
-    if((rx > 0) && (rx < MAX_SECONDS_PER_DAY)){
-      sync_result = rx;
-    }    
+    String msg = String(incomingPacket);  
+    if(msg == "ota"){
+      OTA_init();
+    }else{    
+      uint32_t rx = msg.toInt();
+      
+      if((rx >= 0) && (rx < MAX_SECONDS_PER_DAY)){
+        sync_result = rx;
+      }    
+    }
   }
 }
 
-uint32_t UDPSYNC_getCurrentSeconds(){
+int UDPSYNC_getCurrentSeconds(){ 
+
+#ifdef KEEP_TIME
   uint32_t passedSinceSync = millis() - sync_timestamp;
   uint32_t total = (passedSinceSync / 1000) + sync_result;
+#else
+  uint32_t total = sync_result;
+#endif
 
-  uint32_t secondsToday = total % MAX_SECONDS_PER_DAY;
-
-  return secondsToday;
+  uint32_t seconds = total % SECONDS_PER_12_H;
+  return (int)seconds;
 }

@@ -2,14 +2,13 @@
 #define CONFIG_H_
 
 #define HOUR_SERVO_PIN              (14) 
-#define MINUTE_SERVO_PIN            (13)
-#define PENDULUM_SENSE_PIN          (5)
-#define PENDULUM_TRIGGER_PIN        (4)
+#define MINUTE_SERVO_PIN            (15)
+#define PENDULUM_SENSE_PIN          (4)
+#define PENDULUM_TRIGGER_PIN        (5)
+#define LED_PIN                     (2)
 
-#define TIME_SERVER_URL             "http://192.168.0.13:60000"
-
-#define SSID_1                      "HUAWEI-B315-05B6"
-#define PASS_1                      "J0HYJGN547T"
+#define SSID_1                      "OhanaCode"
+#define PASS_1                      "0hana0ffice"
 
 #define SSID_2                      "ujagaga"
 #define PASS_2                      "ohana130315"
@@ -21,4 +20,11 @@
 #define SECONDS_PER_MINUTE          (60)
 #define MINUTES_PER_HOUR            (60)
 #define SECONDS_PER_HOUR            (SECONDS_PER_MINUTE * MINUTES_PER_HOUR)
+
+// For OTA update
+#define DEVICE_NAME                 "OC_ESP_CLOCK"
+
+// For debugging purposes. Comment to only accept sync and not keep own time.
+#define KEEP_TIME 
+
 #endif

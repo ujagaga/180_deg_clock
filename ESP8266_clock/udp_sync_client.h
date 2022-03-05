@@ -3,6 +3,6 @@
 
 extern void UDPSYNC_init(void);
 extern void UDPSYNC_process(void);
-extern uint32_t UDPSYNC_getCurrentSeconds(void);
+extern int UDPSYNC_getCurrentSeconds(void);
 
 #endif

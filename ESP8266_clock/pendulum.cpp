@@ -2,40 +2,57 @@
 #include "pendulum.h"
 #include "config.h"
 
-#define TRIGGER_TIME    (100)
-#define SENSE_TIMEOUT   (3000)
+#define DURATION      (100)
+#define TRIGGER_TIME  (100)
+#define MIN_PERIOD    (500)
 
-static uint32_t sense_timestamp = 0;
-static uint32_t trigger_timestamp = 0;
+volatile uint32_t sense_timestamp = 0;
+volatile bool sense_flag = false;
+bool magnet_active_flag = false;
+
+ICACHE_RAM_ATTR void sense(){ 
+  if(!sense_flag){
+    // Magnet just detected
+    sense_timestamp = millis();  
+    sense_flag = true; 
+  } 
+}
 
 void PENDULUM_init(){
   pinMode(PENDULUM_TRIGGER_PIN, OUTPUT);
   pinMode(PENDULUM_SENSE_PIN, INPUT_PULLUP);
+  digitalWrite(PENDULUM_TRIGGER_PIN, LOW);
+  digitalWrite(LED_PIN, HIGH);
+  magnet_active_flag = false;
+  attachInterrupt(digitalPinToInterrupt(PENDULUM_SENSE_PIN), sense, FALLING);
 }
 
-void PENDULUM_process(){
-  uint32_t timeSinceSense = millis() - sense_timestamp;
-  bool sense = (digitalRead(PENDULUM_SENSE_PIN) == HIGH);
-
-  if(sense){
-    digitalWrite(PENDULUM_TRIGGER_PIN, HIGH);
-    sense_timestamp = millis(); 
+void PENDULUM_process(){ 
+  if(sense_flag){ 
+    uint32_t passed = millis() - sense_timestamp;     
     
-    if(trigger_timestamp == 0){
-      trigger_timestamp = millis();
+    if(passed < TRIGGER_TIME){
+      // Wait for the right time to trigger the magnet     
+      magnet_active_flag = false;   
+    }else if(passed < (TRIGGER_TIME + DURATION)){
+      // Keep repelling the magnet
+      magnet_active_flag = true;
+    }else if(passed < MIN_PERIOD){
+      magnet_active_flag = false;      
+    }else{
+      magnet_active_flag = false;
+      sense_flag = false;
     }
   }else{
-    if(timeSinceSense > SENSE_TIMEOUT){
-      // No sense pin change detected for a long time. Try to trigger the pendulum to start swinging.
-      digitalWrite(PENDULUM_TRIGGER_PIN, HIGH);
-      sense_timestamp = millis(); 
-    }else if(timeSinceSense > TRIGGER_TIME){
-      digitalWrite(PENDULUM_TRIGGER_PIN, LOW);
-      trigger_timestamp = 0;
-    }else{
-      // Trigger time not yet passed, so keep it up.
-      digitalWrite(PENDULUM_TRIGGER_PIN, HIGH);
-    }
+    magnet_active_flag = false;
   }
+
+  if(magnet_active_flag){
+    digitalWrite(PENDULUM_TRIGGER_PIN, HIGH);
+    digitalWrite(LED_PIN, LOW);    
+  }else{
+    digitalWrite(PENDULUM_TRIGGER_PIN, LOW);
+    digitalWrite(LED_PIN, HIGH);
+  } 
 
 }
