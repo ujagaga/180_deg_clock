@@ -12,9 +12,9 @@ import socket
 
 WEB_PORT = 60000
 
-m = 0
-s = 58
-h = 11
+m = 30
+s = 0
+h = 0
 
 
 total_seconds = h * 3600 + m * 60 + s
