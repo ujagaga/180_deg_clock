@@ -1,3 +1,6 @@
+/* This is an example of config.h
+ * Please make a copy of this file and rename it to config.h
+*/
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
@@ -7,11 +10,11 @@
 #define PENDULUM_TRIGGER_PIN        (5)
 #define LED_PIN                     (2)
 
-#define SSID_1                      "OhanaCode"
-#define PASS_1                      "0hana0ffice"
+#define SSID_1                      "My primary WiFi SSID"
+#define PASS_1                      "wifi_pass"
 
-#define SSID_2                      "ujagaga"
-#define PASS_2                      "ohana130315"
+#define SSID_2                      "Optional alternate WiFi SSID"
+#define PASS_2                      "WiFi2_pass"
 
 #define UDP_PORT                    (60000)
 #define SYNC_TIMEOUT                (1000) 
