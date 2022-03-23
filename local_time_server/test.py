@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 """
-This is a simple time server to broadcast local time (number of seconds passed today) via UDP.
-NTP internet servers only show UTC time and I want the local time for my custom made wall clock.
-An alternative is to install a local NTP server, but running this python script is much simpler
-both for setup and access.
+This is the same as the local_time.py except it does not send the local time, 
+but custom time so I can test the mechanics of the clock.
 """
 
 import time

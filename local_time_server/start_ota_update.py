@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+"""
+This scrypt activates Over The Air Update on the wall clock via UDP.
+"""
 import time
 import socket
 
