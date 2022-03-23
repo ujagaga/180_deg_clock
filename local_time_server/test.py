@@ -12,10 +12,9 @@ import socket
 
 WEB_PORT = 60000
 
-m = 30
+m = 0
 s = 0
-h = 0
-
+h = 6
 
 total_seconds = h * 3600 + m * 60 + s
 message = "{}".format(total_seconds).encode('utf-8')

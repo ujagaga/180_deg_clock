@@ -24,7 +24,7 @@
 // For OTA update
 #define DEVICE_NAME                 "OC_ESP_CLOCK"
 
-// For debugging purposes. Comment to only accept sync and not keep own time.
-#define KEEP_TIME 
+// For debugging purposes.
+//#define TEST_SWEEP
 
 #endif

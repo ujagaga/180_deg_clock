@@ -23,13 +23,16 @@ void UDPSYNC_process(){
     incomingPacket[len] = 0;
 
     String msg = String(incomingPacket);  
+    Serial.println(msg);
     if(msg == "ota"){
       OTA_init();
     }else{    
+    
       uint32_t rx = msg.toInt();
       
       if((rx >= 0) && (rx < MAX_SECONDS_PER_DAY)){
         sync_result = rx;
+        sync_timestamp = millis();
       }    
     }
   }
@@ -37,13 +40,9 @@ void UDPSYNC_process(){
 
 int UDPSYNC_getCurrentSeconds(){ 
 
-#ifdef KEEP_TIME
   uint32_t passedSinceSync = millis() - sync_timestamp;
   uint32_t total = (passedSinceSync / 1000) + sync_result;
-#else
-  uint32_t total = sync_result;
-#endif
-
   uint32_t seconds = total % SECONDS_PER_12_H;
+  
   return (int)seconds;
 }
