@@ -12,7 +12,7 @@ WEB_PORT = 60000
 
 m = 0
 s = 0
-h = 6
+h = 0
 
 total_seconds = h * 3600 + m * 60 + s
 message = "{}".format(total_seconds).encode('utf-8')
