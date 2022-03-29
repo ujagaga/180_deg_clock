@@ -3,7 +3,7 @@
 #include "udp_sync_client.h"
 #include "config.h"
 
-#define MOVE_TIMEOUT    (14)
+#define MOVE_TIMEOUT    (100)
 
 Servo hourServo;
 Servo minuteServo;
@@ -14,12 +14,20 @@ static int h_angle = 0;
 static int targetHourAngle = 0;
 static int targetMinuteAngle = 0;
 
+#ifdef DETACH_HOUR_SERVO
+static bool hourServoAttached = false;
+#endif
+
 void SERVO_init(){
   pinMode(HOUR_SERVO_PIN, OUTPUT);
   pinMode(MINUTE_SERVO_PIN, OUTPUT);
   hourServo.attach(HOUR_SERVO_PIN, 500, 2500);
   minuteServo.attach(MINUTE_SERVO_PIN, 500, 2500);
   minuteServo.write(m_angle);  
+
+#ifdef DETACH_HOUR_SERVO
+  hourServoAttached = true;
+#endif
 }
 
 int calc_m_angle(int seconds){
@@ -79,8 +87,29 @@ void SERVO_process(){
   }else if((millis() - move_timestamp) > MOVE_TIMEOUT){
     if(targetHourAngle > h_angle){
       h_angle++;
+      
+#ifdef DETACH_HOUR_SERVO
+      if(!hourServoAttached){
+        hourServo.attach(HOUR_SERVO_PIN, 500, 2500);
+        hourServoAttached = true;
+      }
+#endif      
     }else if(targetHourAngle < h_angle){
       h_angle--;
+      
+#ifdef DETACH_HOUR_SERVO
+      if(!hourServoAttached){
+        hourServo.attach(HOUR_SERVO_PIN, 500, 2500);
+        hourServoAttached = true;
+      }
+#endif      
+    }else{
+#ifdef DETACH_HOUR_SERVO
+      if(hourServoAttached){
+        hourServo.detach();
+        hourServoAttached = false;
+      }      
+#endif 
     }
 
     if(targetMinuteAngle > m_angle){
