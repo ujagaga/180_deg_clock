@@ -4,6 +4,9 @@
 #include "config.h"
 
 #define MOVE_TIMEOUT    (100)
+#define H_SRV_MIN       (490)
+#define H_SRV_MAX       (2460)
+
 
 Servo hourServo;
 Servo minuteServo;
@@ -21,7 +24,7 @@ static bool hourServoAttached = false;
 void SERVO_init(){
   pinMode(HOUR_SERVO_PIN, OUTPUT);
   pinMode(MINUTE_SERVO_PIN, OUTPUT);
-  hourServo.attach(HOUR_SERVO_PIN, 500, 2500);
+  hourServo.attach(HOUR_SERVO_PIN, H_SRV_MIN, H_SRV_MAX);
   minuteServo.attach(MINUTE_SERVO_PIN, 500, 2500);
   minuteServo.write(m_angle);  
 
@@ -52,6 +55,15 @@ int calc_h_angle(int seconds){
 
   int ratio = SECONDS_PER_12_H / 180;
   int result = seconds / ratio;
+
+  float current = (float)result;
+  if(result > 135){
+    result = (int)(current * 1.01);
+  }else if(result > 90){
+    result = (int)(current * 1.01);
+  }else if(result > 45){
+    result = (int)(current * 0.98);
+  }
 
   return result;
 }
@@ -90,7 +102,7 @@ void SERVO_process(){
       
 #ifdef DETACH_HOUR_SERVO
       if(!hourServoAttached){
-        hourServo.attach(HOUR_SERVO_PIN, 500, 2500);
+        hourServo.attach(HOUR_SERVO_PIN, H_SRV_MIN, H_SRV_MAX);
         hourServoAttached = true;
       }
 #endif      
@@ -99,7 +111,7 @@ void SERVO_process(){
       
 #ifdef DETACH_HOUR_SERVO
       if(!hourServoAttached){
-        hourServo.attach(HOUR_SERVO_PIN, 500, 2500);
+        hourServo.attach(HOUR_SERVO_PIN, H_SRV_MIN, H_SRV_MAX);
         hourServoAttached = true;
       }
 #endif      

@@ -10,8 +10,8 @@ import socket
 
 WEB_PORT = 60000
 
-m = 0
 s = 0
+m = 0
 h = 0
 
 total_seconds = h * 3600 + m * 60 + s
@@ -22,11 +22,9 @@ server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
 # UDP is not guaranteed to arrive so broadcast few times
-server.sendto(message, ("255.255.255.255", WEB_PORT))
+server.sendto(message, ("192.168.0.255", WEB_PORT))
 time.sleep(0.1)
-server.sendto(message, ("255.255.255.255", WEB_PORT))
-time.sleep(0.1)
-server.sendto(message, ("255.255.255.255", WEB_PORT))
+server.sendto(message, ("192.168.0.255", WEB_PORT))
 
 print("Sent: {}".format(message), flush=True)
 
